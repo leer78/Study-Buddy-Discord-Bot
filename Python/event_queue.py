@@ -1,5 +1,5 @@
 import datetime
-from events import Event
+from Python.events import Event
 
 class EventQueue:
 	# The events sorted decreasing order of the timedelta from the current time
@@ -23,3 +23,7 @@ class EventQueue:
 		return self.events.pop()
 
 
+	def is_empty(self) -> bool:
+		if len(self.events) == 0:
+			return True
+		return False
