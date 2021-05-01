@@ -2,7 +2,7 @@ import asyncio
 import discord
 import time
 import datetime
-from discord.ext import commands
+from staying_alive import staying_alive
 
 from events import *
 
@@ -38,6 +38,12 @@ async def on_message(message: discord.message.Message):
     await message.author.send(start_message)
     await run_queue()
 
+    if msg.startswith("+add "):
+        schedule_add = open('Database\\{message.author}.txt'.format(message=message),"a")
+        schedule_add.write(formatted_event(msg) + "\n")
+        schedule_add.close()
+        await message.channel.send("Event Has Been Added")
+    
 
 
 
@@ -58,4 +64,5 @@ async def run_queue():
 with open('token.txt') as file:
     token = file.readline()
 
-client.run(token)  # Launches the bot
+staying_alive()
+client.run(token) # Launches the bot 
