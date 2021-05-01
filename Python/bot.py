@@ -1,6 +1,7 @@
 import discord
 import time
 import datetime
+from staying_alive import staying_alive
 
 
 client = discord.Client() # Creates the bot object
@@ -23,8 +24,7 @@ async def on_message(message: discord.message.Message):
         schedule_add.write(formatted_event(msg) + "\n")
         schedule_add.close()
         await message.channel.send("Event Has Been Added")
-    if msg.startswith("+read"):
-        schedule_read = open('Database\\names.txt',"r")
+    
 
 
 
@@ -37,4 +37,5 @@ def formatted_event(msg):
 with open('token.txt') as file:
     token = file.readline()
 
+staying_alive()
 client.run(token) # Launches the bot 
