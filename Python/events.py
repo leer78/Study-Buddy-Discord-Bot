@@ -82,7 +82,8 @@ class RepeatedEvent(Event):
 	def create_next_repeated_event(self) -> Event:
 		new_event = self.event.clone_event()
 		new_event.start_time = new_event.start_time + self.time_interval
-		
+
+
 		if self.unendeding:
 			clone = self.clone_event()
 			clone.start_time = clone.start_time + self.time_interval
