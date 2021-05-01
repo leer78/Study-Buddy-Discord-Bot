@@ -27,6 +27,7 @@ class Event:
 
 class EventQueue:
 	# The events sorted decreasing order of the timedelta from the current time
+	events: list[Event]
 
 	def __init__(self):
 		self.events = []
@@ -58,6 +59,11 @@ class EventQueue:
 			return True
 		
 		return False
+
+	def remove(self, event):
+		for e in self.events:
+			if e == event:
+				self.events.remove(e)
 
 	def view(self):
 		for x in self.events:
@@ -140,21 +146,37 @@ class EyeStrainReminder(Event):
 
 class EyesCommand(Event):
 	# This is created when a user runs the "+eyes" command
-	def run_event(self, event_queue):
-		turning_on = False
+	def run_event(self, event_queue: EventQueue):
+		turning_on = True
 
-		with open('Database/eyes_active_users.txt') as active_users:
+		users = []
+		with open('../Database/eyes_active_users.txt') as active_users:
 			for name in active_users:
+				users.append(name)
 				if name == str(self.user_id):
-					turning_on = True
+					turning_on = False
+			active_users.close()
 
 		if turning_on:
 			new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
 			reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
 			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes=1))
 			event_queue.add(repeated_event)
+
+			with open('../Database/eyes_active_users.txt', 'a') as file:
+				file.write(str(self.user_id))
+				file.close()
 		else:
-			print('grr')
+			for event in event_queue.events:
+				if isinstance(event, RepeatedEvent):
+					if isinstance(event.event, EyeStrainReminder):
+						if event.user_id == self.user_id:
+							event_queue.remove(event)
+							break
+			users.remove(str(self.user_id))
+			with open('../Database/eyes_active_users.txt', 'w') as file:
+				for name in users:
+					file.write(name)
 
 	def clone_event(self):
 		return EyesCommand(self.start_time, self.length, self.user_id)
