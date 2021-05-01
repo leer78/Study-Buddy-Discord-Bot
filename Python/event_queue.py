@@ -23,7 +23,11 @@ class EventQueue:
 		return self.events.pop()
 
 
-	def is_empty(self) -> bool:
+	def is_ready(self) -> bool:
 		if len(self.events) == 0:
+			return False
+		
+		if self.events[len(self.events) - 1].start_time - datetime.datetime.now() <= datetime.timedelta():
 			return True
+		
 		return False
