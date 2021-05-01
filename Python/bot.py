@@ -17,7 +17,6 @@ async def on_message(message: discord.message.Message):
     msg = message.content
     msg_content = msg.split()
 
-    print(type(message))
 
     if msg.startswith("+add "):
         schedule_add = open('Database\\{message.author}.txt'.format(message=message),"a")
