@@ -5,7 +5,6 @@ import discord
 
 class Event:
 	user_id: int
-	
 
 	start_time: datetime.datetime
 	length: datetime.timedelta
@@ -67,7 +66,7 @@ class EventQueue:
 class RepeatedEvent(Event):
 	num_of_repeats: int
 
-	unendeding: bool 
+	unending: bool
 
 	time_interval: int # The amount of time between the repetition of the event
 
@@ -77,7 +76,7 @@ class RepeatedEvent(Event):
 		super().__init__(start_time, length, user_id)
 		self.num_of_repeats = repeats
 		self.event = event
-		self.unendeding = unending
+		self.unending = unending
 		self.time_interval = time_interval
 
 	def create_next_repeated_event(self) -> Event:
@@ -105,7 +104,7 @@ class RepeatedEvent(Event):
 		event_queue.add_list([self.event, self.create_next_repeated_event()])
 	
 	def clone_event(self):
-		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding, self.user_id, self.time_interval)
+		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
 
 
 
