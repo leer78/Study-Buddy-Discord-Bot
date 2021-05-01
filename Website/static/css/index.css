@@ -1,0 +1,302 @@
+
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
+body {
+    margin: 0;
+	font-family: 'DIN Alternate Bold', sans-serif;
+
+}
+
+.parallax{
+    background-color: rgb(119, 104, 252); 
+}
+
+.title{
+   background:rgba(60, 2, 99, 0.5);
+   text-align: center;
+   color:black;
+   padding:30px;
+   font-size: 40px;
+   letter-spacing: 10px;
+
+
+}
+.sticky{
+    position:fixed;
+    top:0;
+    width: 100%;
+
+}
+
+
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-image: url(../images/gradientbackground.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+}
+
+.titlecard{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 20%;
+    top: 20%;
+
+}
+
+.titlecard .studybuddyIntro img{
+
+    width: 15vw;
+    height: auto;
+    margin: 0px;
+}
+
+.titlecard .logoBig img{
+
+    width: 13vw;
+    height: auto;
+    margin: 0px 0px 0px 50%;
+
+}
+
+.msg-container{
+    width: 500px;
+    height: 280px;
+    position: absolute;
+    left: 15%;
+    top: 100%;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+
+
+#slider{
+    display: inline-flex;
+    transition: 0.25s;
+}
+
+.msg-col{
+    width: 600px;
+    height: 280px;
+
+}
+ .msg-col h1{
+     color: white;
+     font-size: 30px;
+     font-weight: 100;
+     margin: 5px 0;
+ }
+
+ .msg-col p{
+     color: white;
+     font-size: 10px;
+     line-height: 25px;
+ }
+
+ .controller{
+     width: 2px; 
+     height: 160px;
+     display: block;
+     background: grey;
+     position: absolute;
+     top: 85%;
+     right: 50px;
+     transform: translateY(-50%);
+ }
+
+#line1, #line2, #line3, #line4{
+    height: 40px;
+    width: 10px;
+    cursor: pointer;
+    transform: translateX(-50%);
+
+}
+
+#active{
+    width: 5px;
+    height: 40px;
+    border-radius: 10px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    transition: 0.25s;
+}
+
+
+.section2{
+    position: relative;
+    width: 80%;
+    height: 40%;
+    margin: 10px auto;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(2,0,36,1) 0%, rgba(93,0,199,1) 73%, rgba(0,212,255,1) 100%);;
+    border-radius: 15px;
+
+  }
+
+  .featuresTitle h3{
+        font-weight: 100;
+        position: relative;
+        text-align: center;
+        font-size: 30px;
+        color: white;
+        margin: 10px 0px 0px 0px;
+  }
+  .section2 .box{
+      position: relative;
+      display:inline-block;
+      width: 30%;
+      height:30vh;
+      background:rgb(119, 104, 252);
+      margin: 15px;
+      box-sizing: border-box;
+      overflow: hidden;
+      border-radius: 10px;
+  }
+
+  .section2 .box .icon{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(43, 13, 173);
+      transition: 0.5s;
+      z-index: 1;
+
+  }
+
+  .section2 .box:hover .icon{
+      top: 20px;
+      left:calc(50% - 30px);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+  }
+
+  .section2 .box .icon .fas{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate( -50%, -50%);
+      font-size: 60px;
+      transition: 0.5s;
+      color:rgb(0, 0, 0);
+  }
+
+  .section2 .box:hover .icon .fas{
+      font-size: 30px;
+  }
+
+  .section2 .box .featurescontent{
+      font-weight: 100;
+      position: absolute;
+      top: 60px;
+      height: (100% - 80px);
+
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: 0.5s;
+  }
+
+  .section2 .box .featurescontent h3{
+      font-weight: 100;
+      margin: 0;
+      padding: 0;
+      color: white;
+      font-size: 1.5vw;
+  }
+
+  .section2 .box .featurescontent p{
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 0.75vw;
+}
+
+
+.menu{
+    background-color: rgba(12, 12, 14, 0.8);
+    text-align: center;
+    z-index: 1;
+    background-image: url(../images/studybuddybotLogo.png);
+    background-repeat: no-repeat;
+    position: relative;
+    background-position-x: 95%;
+}
+
+.discordlogo{
+    width: 155px;
+
+}
+.discordlogo img{
+    width: 50px;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    top: 10%;
+    left: 5%;
+}
+.menu-u1{
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+}
+
+.menu-u1 li{
+    font-size: 1em;
+    list-style:none;
+    display:inline-block;
+    padding:25px 25px 25px 25px;
+    z-index: 1;
+
+}
+
+.menu-u1 li:hover{
+    transform: 2s;
+    /*border: 1px solid black;*/
+}
+
+.a-menu {
+    color:rgb(247, 247, 247);
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    position: relative;
+  }
+
+#current-page{
+    background-color:rgb(106, 17, 207);
+    
+
+}
+
+
+
+.a-menu:after {    
+
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: rgb(255, 255, 255);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0px;
+    bottom: 20px;
+  }
+  a:hover:after { 
+    width: 80%; 
+    left: 10%; 
+  }
+
+
