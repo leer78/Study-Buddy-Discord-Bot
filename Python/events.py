@@ -37,8 +37,8 @@ class RepeatedEvent(Event):
 
 	event: Event # Event to be repeated
 
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, repeats: int, event: Event, unending: bool):
-		super().__init__(start_time, length, )
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, repeats: int, event: Event, unending: bool, user_id):
+		super().__init__(start_time, length, user_id)
 		self.num_of_repeats = repeats
 		self.event = event
 		self.unendeding = unending
@@ -48,7 +48,7 @@ class RepeatedEvent(Event):
 		new_event.start_time = new_event.start_time + self.time_interval
 		
 		if self.unendeding:
-			return RepeatedEvent(start_time=self.start_time + self.time_interval, repeats=1, event=new_event, unending=self.unendeding)
+			return RepeatedEvent(start_time=self.start_time + self.time_interval, length= self.length, repeats=1, event=new_event, unending=self.unendeding)
 		
 		if self.num_of_repeats == 0:
 			return NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
@@ -74,12 +74,12 @@ class MessageEvent(Event):
 
 	message_content: str
 
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, message: str):
-		super().__init__(start_time, length)
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, message: str, user_id):
+		super().__init__(start_time, length, user_id)
 		self.message_content = message
 
 	def run_event(self, event_queue):
 		return self.message_content
 	
 	def clone_event(self):
-		return MessageEvent(self.start_time, self.length, self.message_content)
+		return MessageEvent(self.start_time, self.length, self.message_content, self.user_id)
