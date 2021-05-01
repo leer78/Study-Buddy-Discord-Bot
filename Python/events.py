@@ -2,37 +2,9 @@ import datetime
 import time
 import discord
 
-class EventQueue:
-	# The events sorted decreasing order of the timedelta from the current time
-	events: list[Event]
 
-	def __init__(self):
-		self.events = []
 
-	def add(self, event: Event):
-		self.events.append(event)
-
-		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now(), reversed=True)
-	
-	def add_list(self, new_events: list[Event]):
-		for e in new_events:
-			self.events.append(e)
 		
-		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now())
-
-	def pop(self):
-		return self.events.pop()
-
-
-	def is_ready(self) -> bool:
-		if len(self.events) == 0:
-			return False
-		
-		if self.events[len(self.events) - 1].start_time - datetime.datetime.now() <= datetime.timedelta():
-			return True
-		
-		return False
-
 class Event:
 	user_id: discord.User
 
@@ -50,12 +22,49 @@ class Event:
 		self.end_time = self.start_time + self.length
 	
 
-	def run_event(self, event_queue: EventQueue):
+	def run_event(self, event_queue):
 		raise NotImplementedError
 
-	def clone_event(self) -> Event:
+	def clone_event(self):
 		raise NotImplementedError
 
+class EventQueue:
+	# The events sorted decreasing order of the timedelta from the current time
+
+	def __init__(self):
+		self.events = []
+
+	def add(self, event: Event):
+		self.events.append(event)
+
+		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now(), reverse=True)
+	
+	def add_list(self, new_events: list[Event]):
+		for e in new_events:
+			self.events.append(e)
+		
+		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now())
+
+	def pop(self):
+		return self.events.pop()
+
+	def is_empty(self) -> bool:
+		if len(self.events) == 0:
+			return True
+		return False
+
+	def is_ready(self) -> bool:
+		if len(self.events) == 0:
+			return False		
+
+		if self.events[len(self.events) - 1].start_time - datetime.datetime.now() <= datetime.timedelta():
+			return True
+		
+		return False
+
+	def view(self):
+		for x in self.events:
+			print(x.start_time)
 
 class RepeatedEvent(Event):
 	num_of_repeats: int
@@ -93,7 +102,8 @@ class RepeatedEvent(Event):
 	def run_event(self, event_queue: EventQueue):
 		# Add the wrapped event to the queue to be executed right away
 		# Create the next instance of RepeatedEvent and that to the queue
-		event_queue.add([self.event, self.create_next_repeated_event()])
+
+		event_queue.add_list([self.event, self.create_next_repeated_event()])
 	
 	def clone_event(self):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding, self.user_id, self.time_interval)
@@ -135,5 +145,5 @@ class EyesCommand(Event):
 		# Check is they have this setting on or off
 		new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
 		reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
-		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes= 1))
+		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes= 1))
 		event_queue.add(repeated_event)

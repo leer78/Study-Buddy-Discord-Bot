@@ -31,3 +31,6 @@ class EventQueue:
 			return True
 		
 		return False
+
+	def view(self):
+		return events
