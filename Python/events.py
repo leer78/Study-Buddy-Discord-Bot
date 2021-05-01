@@ -5,6 +5,7 @@ import discord
 
 class Event:
 	user_id: int
+	
 
 	start_time: datetime.datetime
 	length: datetime.timedelta
