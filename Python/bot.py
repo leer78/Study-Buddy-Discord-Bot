@@ -3,9 +3,10 @@ import time
 import datetime
 
 
-client = discord.Client()
+client = discord.Client() # Creates the bot object
 
 
+# Bot functions
 @client.event
 async def on_ready():   
     print(client.user , " Has Logged In")
@@ -33,8 +34,8 @@ def formatted_event(msg):
     return event[1] + ": " + event[2] 
 
 
-
+# Reads in the token 
 with open('token.txt') as file:
     token = file.readline()
 
-client.run(token) 
+client.run(token) # Launches the bot 
