@@ -37,23 +37,29 @@ class RepeatedEvent(Event):
 
 	event: Event # Event to be repeated
 
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, repeats: int, event: Event, unending: bool, user_id):
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, repeats: int, event: Event, unending: bool, user_id, time_interval):
 		super().__init__(start_time, length, user_id)
 		self.num_of_repeats = repeats
 		self.event = event
 		self.unendeding = unending
+		self.time_interval = time_interval
 
 	def create_next_repeated_event(self) -> Event:
 		new_event = self.event.clone_event()
 		new_event.start_time = new_event.start_time + self.time_interval
 		
 		if self.unendeding:
-			return RepeatedEvent(start_time=self.start_time + self.time_interval, length= self.length, repeats=1, event=new_event, unending=self.unendeding, user_id=self.user_id)
+			clone = self.clone_event()
+			clone.start_time = clone.start_time + self.time_interval
+			return clone
 		
 		if self.num_of_repeats == 0:
 			return NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
 
-		return RepeatedEvent(start_time=self.start_time + self.time_interval, length=self.length, repeats=self.num_of_repeats - 1, event=new_event, unending=self.unendeding, user_id=self.user_id)
+		clone = self.clone_event()
+		clone.start_time = clone.start_time + self.time_interval
+		clone.num_of_repeats -= 1
+		return clone
 
 	def run_event(self, event_queue: EventQueue):
 		# Add the wrapped event to the queue to be executed right away
@@ -61,7 +67,7 @@ class RepeatedEvent(Event):
 		event_queue.add([self.event, self.create_next_repeated_event()])
 	
 	def clone_event(self):
-		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding, self.user_id)
+		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding, self.user_id, self.time_interval)
 
 
 
@@ -83,3 +89,22 @@ class MessageEvent(Event):
 	
 	def clone_event(self):
 		return MessageEvent(self.start_time, self.length, self.message_content, self.user_id)
+
+class EyeStrainReminder(Event):
+	reminder_text: str = 'You need to look away now'
+
+	def run_event(self, event_queue: EventQueue):
+		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
+	
+	def clone_event(self):
+		return EyeStrainReminder(self.start_time, self.length, self.user_id)
+
+
+class EyesCommand(Event):
+	# This is created when a user runs the "+eyes" command
+	def run_event(self, event_queue):
+		# Check is they have this setting on or off
+		new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
+		reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
+		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes= 1))
+		event_queue.add(repeated_event)

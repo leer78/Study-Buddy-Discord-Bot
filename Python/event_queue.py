@@ -2,7 +2,7 @@ import datetime
 from events import Event
 
 class EventQueue:
-	# The events sorted increasing order of the timedelta from the current time
+	# The events sorted decreasing order of the timedelta from the current time
 	events: list[Event]
 
 	def __init__(self):
@@ -19,7 +19,7 @@ class EventQueue:
 		
 		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now())
 
-	def remove(self):
-		self.events.pop()
+	def pop(self):
+		return self.events.pop()
 
 
