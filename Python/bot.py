@@ -32,18 +32,15 @@ async def on_message(message: discord.message.Message):
         #queue.add(PomodoroCommand(datetime.datetime.now(),datetime.timedelta(), message.author))
         start_message = "Pomodoro Session Has Begun! Type +pomodoro To End It."
 
+    if(msg.startswith("+gaming")):
+        #queue.add(GamingCommand(datetime.datetime.now(),datetime.timedelta(), message.author))
+        start_message = "Gaming Session Has Begun! Type +gaming To End It."
 
     
 
     await message.author.send(start_message)
     await run_queue()
 
-    if msg.startswith("+add "):
-        schedule_add = open('Database\\{message.author}.txt'.format(message=message),"a")
-        schedule_add.write(formatted_event(msg) + "\n")
-        schedule_add.close()
-        await message.channel.send("Event Has Been Added")
-    
 
 
 
