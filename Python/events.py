@@ -3,30 +3,27 @@ import time
 import discord
 
 
-
-		
 class Event:
-	user_id: discord.User
+	user_id: int
 
-	start_time: datetime.time
+	start_time: datetime.datetime
 	length: datetime.timedelta
-	end_time: datetime.time
+	end_time: datetime.datetime
 
-
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: discord.User):
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: int):
 		self.user_id = user_id
 
 		self.start_time = start_time
 		self.length = length
 
 		self.end_time = self.start_time + self.length
-	
 
 	def run_event(self, event_queue):
 		raise NotImplementedError
 
 	def clone_event(self):
 		raise NotImplementedError
+
 
 class EventQueue:
 	# The events sorted decreasing order of the timedelta from the current time
@@ -43,7 +40,7 @@ class EventQueue:
 		for e in new_events:
 			self.events.append(e)
 		
-		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now())
+		self.events.sort(key=lambda ev: ev.start_time - datetime.datetime.now(), reverse=True)
 
 	def pop(self):
 		return self.events.pop()
