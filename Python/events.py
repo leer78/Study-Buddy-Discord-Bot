@@ -48,12 +48,12 @@ class RepeatedEvent(Event):
 		new_event.start_time = new_event.start_time + self.time_interval
 		
 		if self.unendeding:
-			return RepeatedEvent(start_time=self.start_time + self.time_interval, length= self.length, repeats=1, event=new_event, unending=self.unendeding)
+			return RepeatedEvent(start_time=self.start_time + self.time_interval, length= self.length, repeats=1, event=new_event, unending=self.unendeding, user_id=self.user_id)
 		
 		if self.num_of_repeats == 0:
 			return NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
 
-		return RepeatedEvent(start_time=self.start_time + self.time_interval, length=self.length, repeats=self.num_of_repeats - 1, event=new_event, unending=self.unendeding)
+		return RepeatedEvent(start_time=self.start_time + self.time_interval, length=self.length, repeats=self.num_of_repeats - 1, event=new_event, unending=self.unendeding, user_id=self.user_id)
 
 	def run_event(self, event_queue: EventQueue):
 		# Add the wrapped event to the queue to be executed right away
@@ -61,7 +61,7 @@ class RepeatedEvent(Event):
 		event_queue.add([self.event, self.create_next_repeated_event()])
 	
 	def clone_event(self):
-		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding)
+		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unendeding, self.user_id)
 
 
 
