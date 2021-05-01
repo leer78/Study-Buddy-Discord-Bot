@@ -12,19 +12,20 @@ async def on_ready():
 
 
 @client.event
-async def on_message(message):    
+async def on_message(message: discord.message.Message):
     msg = message.content
     msg_content = msg.split()
+
+    print(type(message))
 
     if msg.startswith("+add "):
         schedule_add = open('Database\\{message.author}.txt'.format(message=message),"a")
         schedule_add.write(formatted_event(msg) + "\n")
         schedule_add.close()
         await message.channel.send("Event Has Been Added")
-        time.sleep(get_time(msg_content[2]))
-        await message.author.send("REMINDER: {event}".format(event = msg_content[1]))
     if msg.startswith("+read"):
         schedule_read = open('Database\\names.txt',"r")
+
 
 
 def formatted_event(msg):
@@ -33,6 +34,7 @@ def formatted_event(msg):
 
 
 
+with open('token.txt') as file:
+    token = file.readline()
 
-
-client.run('') # DELETE BEFORE PUSHING DISCORD DOES NOT LIKE WHEN WE SHARE TOKEN ONLINE
+client.run(token) 
