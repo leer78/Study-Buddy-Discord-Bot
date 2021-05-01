@@ -11,8 +11,15 @@ class EventQueue:
 	def add(self, event: Event):
 		self.events.append(event)
 
+		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now(), reversed=True)
+	
+	def add_list(self, new_events: list[Event]):
+		for e in new_events:
+			self.events.append(e)
+		
 		self.events.sort(key= lambda e: e.start_time - datetime.datetime.now())
 
+	def remove(self):
+		self.events.pop()
 
-def sorting_key(e: Event):
-	return e.start_time - datetime.datetime.now()
+
