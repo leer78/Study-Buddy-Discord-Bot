@@ -4,13 +4,13 @@ import discord
 
 
 class Event:
-	user_id: int
+	user_id: discord.User
 
 	start_time: datetime.datetime
 	length: datetime.timedelta
 	end_time: datetime.datetime
 
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: int):
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: discord.User):
 		self.user_id = user_id
 
 		self.start_time = start_time
@@ -63,6 +63,7 @@ class EventQueue:
 		for x in self.events:
 			print(x.start_time)
 
+
 class RepeatedEvent(Event):
 	num_of_repeats: int
 
@@ -83,8 +84,7 @@ class RepeatedEvent(Event):
 		new_event = self.event.clone_event()
 		new_event.start_time = new_event.start_time + self.time_interval
 
-
-		if self.unendeding:
+		if self.unending:
 			clone = self.clone_event()
 			clone.start_time = clone.start_time + self.time_interval
 			return clone
@@ -107,11 +107,11 @@ class RepeatedEvent(Event):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
 
 
-
 class NullEvent(Event):
 
 	def run_event(self, event_queue):
 		return None
+
 
 class MessageEvent(Event):
 
@@ -127,6 +127,7 @@ class MessageEvent(Event):
 	def clone_event(self):
 		return MessageEvent(self.start_time, self.length, self.message_content, self.user_id)
 
+
 class EyeStrainReminder(Event):
 	reminder_text: str = 'You need to look away now'
 
@@ -140,8 +141,21 @@ class EyeStrainReminder(Event):
 class EyesCommand(Event):
 	# This is created when a user runs the "+eyes" command
 	def run_event(self, event_queue):
-		# Check is they have this setting on or off
-		new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
-		reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
-		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes= 1))
-		event_queue.add(repeated_event)
+		turning_on = False
+
+		with open('Database/eyes_active_users.txt') as active_users:
+			for name in active_users:
+				if name == str(self.user_id):
+					turning_on = True
+
+		if turning_on:
+			new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
+			reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
+			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes=1))
+			event_queue.add(repeated_event)
+		else:
+			print('grr')
+
+	def clone_event(self):
+		return EyesCommand(self.start_time, self.length, self.user_id)
+
