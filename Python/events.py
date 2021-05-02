@@ -274,7 +274,7 @@ class WaterCommand(Event):
 
 
 class WaterReminder(Event):
-	reminder_text: str = "It's been an hour since you're last water reminder, have you drunken your water for the hour?"
+	reminder_text: str = "It's been an hour since you're last water reminder, have you drank your water for the hour?"
 
 	def run_event(self, event_queue: EventQueue):
 		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
@@ -310,5 +310,5 @@ class BottleCommand(Event):
 			for item in items:
 				writer.writerow(item)
 
-		message = "One bottle has just been added to your daily total! You have now drunken " + str(num_of_bottles + 1) + " bottle(s) today!"
+		message = "One bottle has just been added to your daily total! You have now drank " + str(num_of_bottles + 1) + " bottle(s) today!"
 		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), message, self.user_id))

@@ -37,6 +37,7 @@ async def to_do_add(ctx, *args):
         task += arg.strip('\n') + ' '
     queue.add(CreateToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, task))
 
+
 @bot.command(name="todoDelete")
 async def to_do_delete(ctx, num):
     queue.add(DeleteToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, num))
