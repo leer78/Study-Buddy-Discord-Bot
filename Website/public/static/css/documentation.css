@@ -73,12 +73,12 @@ body{
     display: none;
     position: absolute;
     right: 0;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     background: white;
     color: black;
     font-size: 25px;
-    line-height: 30px;
+    line-height: 25px;
     top: 50%;
     transform: translateY(50%);
     border-radius: 50%;
@@ -87,16 +87,16 @@ body{
 .context{
     width: 80%;
     background: grey;
-    color: white;
+    color: transparent;
     margin: auto;
-    font-size: 20px;
+    font-size: 0px;
     text-align: justify;
     padding: 0 20px 20px 20px;
     border-radius: 0 0 15px 15px;
     position: relative;
     transition: 0.3s ease;
     top: -40px;
-    height: 0px;
+    height: 0px
 }
 
 
@@ -108,7 +108,9 @@ body{
 .context.show{
     padding-top: 40px;
     top: -25px;
-    height: 305px;
+    height: 350px ;
+    font-size: 20px;
+    color: white;
 }
 .context.show img{
     padding-top: 5px;
@@ -144,12 +146,12 @@ input{
     display: none;
 }
 
-#check1:checked ~ .mainContainer .bar #plus1{
+#check1:checked ~ .mainContainer .bar #minus1{
     display: block;
 }
-#check2:checked ~ .mainContainer .bar #plus2{
+#check2:checked ~ .mainContainer .bar #minus2{
     display: block;
 }
-#check3:checked ~ .mainContainer .bar #plus3{
+#check3:checked ~ .mainContainer .bar #minus3{
     display: block;
 }
