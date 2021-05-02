@@ -14,7 +14,6 @@ class CreateToDoCommand(Event):
 
     def run_event(self, event_queue):
         #  Adds the to do item to the users to do list
-        print("Grr, I am doing stuff")
         items = []
 
         with open('database/to_do_lists/' + str(self.user_id) + '.csv', 'a') as creation:
@@ -28,7 +27,7 @@ class CreateToDoCommand(Event):
             to_do_list.close()
 
         items.append([len(items) + 1, self.to_do_item])
-        print(str(self.user_id) + ": That should have been a user id")
+
         with open('database/to_do_lists/' + str(self.user_id) + '.csv', 'w', newline='') as to_do_list:
             writer = csv.writer(to_do_list)
             for item in items:

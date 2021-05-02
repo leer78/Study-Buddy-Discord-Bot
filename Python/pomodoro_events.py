@@ -20,8 +20,6 @@ class CheckStudyingCommand(Event):
 
         items = [item.strip('\n') for item in items]
 
-        print(items)
-
         studying = False
         if str(self.requested_user) in items:
             studying = True
@@ -30,7 +28,6 @@ class CheckStudyingCommand(Event):
             event_queue.add(MessageEvent(self.start_time, self.length, "Yes, that user is currently studying! You probably shouldn't bother them!", self.user_id))
         else:
             event_queue.add(MessageEvent(self.start_time, self.length, "No, that user isn't studying! Feel free to give them a call!", self.user_id))
-
 
 
 class PomodoroCommand(Event):
