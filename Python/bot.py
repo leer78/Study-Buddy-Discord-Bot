@@ -3,6 +3,7 @@ import discord
 import time
 import datetime
 from discord.ext import tasks, commands
+from pomodoro_events import *
 
 from events import *
 from to_do_events import *
@@ -61,6 +62,11 @@ async def water(ctx):
 @bot.command(name="bottle")
 async def bottle(ctx):
     queue.add(BottleCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
+
+
+@bot.command(name="studying?")
+async def studying(ctx, user: discord.User):
+    queue.add(CheckStudyingCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, user))
 
 
 @tasks.loop(seconds=1)
