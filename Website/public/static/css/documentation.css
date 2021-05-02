@@ -84,6 +84,7 @@ body{
 }
 
 .context{
+    font-family: 'Nanum Gothic Coding', monospace;
     width: 80%;
     background: grey;
     color: transparent;
@@ -107,7 +108,7 @@ body{
 .context.show{
     padding-top: 40px;
     top: -25px;
-    height: 350px ;
+    height: 100%;
     font-size: 20px;
     color: white;
 }
