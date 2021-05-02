@@ -9,7 +9,7 @@ from events import *
 from to_do_events import *
 from gaming_events import *
 from water_events import *
-from music_events import *
+from req_events import *
 
 
 bot = commands.Bot(command_prefix='+')
@@ -74,6 +74,11 @@ async def studying(ctx, user: discord.User):
 @bot.command(name='music')
 async def music(ctx):
     queue.add(MusicReqCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
+
+
+@bot.command(name='meditation')
+async def meditation(ctx):
+    queue.add(MeditationReqCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 
 
 @tasks.loop(seconds=1)
