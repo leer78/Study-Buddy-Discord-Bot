@@ -259,5 +259,5 @@ class PomodoroRepeated(Event):
 		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), self.length, "The Break is over", self.user_id) ,self.create_next_repeated_event()])
 	
 	def clone_event(self):
-		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
+		return PomodoroRepeated(self.start_time, self.length, self.num_of_repeats, self.event, self.user_id, self.time_interval)
 	
