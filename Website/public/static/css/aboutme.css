@@ -47,7 +47,7 @@ body {
      display: block;
      background: grey;
      position: absolute;
-     top: 30%;
+     top: 25%;
      right: 50px;
      transform: translateY(-50%);
  }
@@ -74,7 +74,7 @@ body {
 
 .section2{
     position: relative;
-    width: 80%;
+    width: 90%;
     height: 40%;
     margin: 10px auto;
     background: rgb(101, 7, 189);
@@ -96,7 +96,7 @@ body {
       position: relative;
       display:inline-block;
       width: 30%;
-      height:30vh;
+      height:35vh;
       background:rgb(119, 104, 252);
       margin: 15px;
       box-sizing: border-box;
