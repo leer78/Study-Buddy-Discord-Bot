@@ -150,7 +150,7 @@ class EyesCommand(Event):
 		turning_on = True
 
 		users = []
-		with open('Database/eyes_active_users.txt') as active_users:
+		with open('eyes_active_users.txt') as active_users:
 			for name in active_users:
 				users.append(name)
 				if name == str(self.user_id):
@@ -163,22 +163,30 @@ class EyesCommand(Event):
 			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes=1))
 			event_queue.add(repeated_event)
 
-			with open('Database/eyes_active_users.txt', 'a') as file:
-				file.write(str(self.user_id))
+			with open('eyes_active_users.txt', 'a') as file:
+				file.write(str(self.user_id) + '\n')
 				file.close()
+
+			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Begun! Type +eyes To End It.", self.user_id))
 		else:
-			for event in event_queue.events:
-				if isinstance(event, RepeatedEvent):
-					if isinstance(event.event, EyeStrainReminder):
-						if event.user_id == self.user_id:
-							event_queue.remove(event)
+			for i in range(0, len(event_queue.events)):
+				if isinstance(event_queue.events[i], RepeatedEvent):
+					if isinstance(event_queue.events[i].event, EyeStrainReminder):
+						if event_queue.events[i].user_id == self.user_id:
+							event_queue.events[i] = NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
 							break
+
+			# for event in event_queue.events:
+			# 	if isinstance(event, RepeatedEvent):
+			# 		if isinstance(event.event, EyeStrainReminder):
+			# 			if event.user_id == self.user_id:
+			# 				event_queue.remove(event)
+			# 				break
 			users.remove(str(self.user_id))
-			with open('Database/eyes_active_users.txt', 'w') as file:
+			with open('eyes_active_users.txt', 'w') as file:
 				for name in users:
 					file.write(name + '\n')
 				file.close()
-
 
 			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Ended! Type +eyes To Begin Again.", self.user_id))
 
