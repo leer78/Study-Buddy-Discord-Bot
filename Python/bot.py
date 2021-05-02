@@ -25,19 +25,19 @@ async def eyes(ctx):
     queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
 
 
-
-@tasks.loop(minutes=0.1)
+@tasks.loop(seconds=1)
 async def run_queue():   
     if not queue.is_empty():
-        print(queue.view())
-        event = queue.pop()  
-        print("MADE IT BEFORE MESSAGE:" )
-        message = event.run_event(queue)
-        print("AFTER MESSAGE:" )
-        # user = await client.fetch_user(event.user_id)
-        user = event.user_id
-        if message is not None:
-            await user.send(message)
+        if queue.is_ready():
+            print(queue.view())
+            event = queue.pop()
+            print("MADE IT BEFORE MESSAGE:" )
+            message = event.run_event(queue)
+            print("AFTER MESSAGE:" )
+            # user = await client.fetch_user(event.user_id)
+            user = event.user_id
+            if message is not None:
+                await user.send(message)
 
 
 
