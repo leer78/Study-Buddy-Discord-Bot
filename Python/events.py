@@ -260,4 +260,49 @@ class PomodoroRepeated(Event):
 	
 	def clone_event(self):
 		return PomodoroRepeated(self.start_time, self.length, self.num_of_repeats, self.event, self.user_id, self.time_interval)
+
+class WaterCommand(Event):
+	# This starts the water for the day, reminder after each hour
+	def run_event(self, event_queue):
+		start_time = datetime.datetime.now() + datetime.timedelta(minutes = 60)
+		reminder_event = WaterReminder(start_time, datetime.timedelta(), self.user_id)
+		repeated_event = RepeatedEvent(start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes = 60))
+
+		event_queue.add_list([MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Started the Pomodoro Studying method", self.user_id), repeated_event])
+
+
+class WaterReminder(Event):
+	reminder_text: str = 'Remember to drink water regularly'
+
+	def run_event(self, event_queue: EventQueue):
+		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
+	
+	def clone_event(self):
+		return WaterReminder(self.start_time, self.length, self.user_id)
+
+
+class BottleCommand(Event):
+	# This is created when a user runs the "+Bottle" command, it adds one bottle to your total
+
+	def run_event(self, event_queue):
+
+
+		with open('database/to_do_lists/' + str(self.user_id) + '.csv', 'a') as create:
+			create.close()
+
+
+		with open('Bottles/' + str(self.user_id) + '.txt', 'r') as b:
+    		lines = (int) (b.readlines())
+		b.close()
+
+		if lines == None:
+			lines = 1
+		else:
+			lines +=1
+
+		with open('Bottles/' + str(self.user_id) + '.txt', 'w') as t:
+			t.write(lines)
+			t.close()		
+
+		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "One bottle has been added to your daily total, it is " + lines, self.user_id))
 	
