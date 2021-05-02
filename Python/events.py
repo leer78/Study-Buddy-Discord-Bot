@@ -175,12 +175,6 @@ class EyesCommand(Event):
 							event_queue.events[i] = NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
 							break
 
-			# for event in event_queue.events:
-			# 	if isinstance(event, RepeatedEvent):
-			# 		if isinstance(event.event, EyeStrainReminder):
-			# 			if event.user_id == self.user_id:
-			# 				event_queue.remove(event)
-			# 				break
 			users.remove(str(self.user_id))
 			with open('eyes_active_users.txt', 'w') as file:
 				for name in users:
@@ -191,7 +185,6 @@ class EyesCommand(Event):
 
 	def clone_event(self):
 		return EyesCommand(self.start_time, self.length, self.user_id)
-
 
 
 class PomodoroCommand(Event):
@@ -240,7 +233,7 @@ class PomodoroRepeated(Event):
 		super().__init__(start_time, length, user_id)
 		self.num_of_repeats = repeats
 		self.event = event
-		self.unending = unending
+		# self.unending = unending
 		self.time_interval = time_interval
 
 	def create_next_repeated_event(self) -> Event:
@@ -263,7 +256,7 @@ class PomodoroRepeated(Event):
 		# Add the wrapped event to the queue to be executed right away
 		# Create the next instance of RepeatedEvent and that to the queue
 
-		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), self.length, message, user_id) ,self.create_next_repeated_event()])
+		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), self.length, "The Break is over", self.user_id) ,self.create_next_repeated_event()])
 	
 	def clone_event(self):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)

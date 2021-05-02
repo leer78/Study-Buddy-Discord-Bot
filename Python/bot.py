@@ -25,6 +25,11 @@ async def eyes(ctx):
     queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
 
 
+@bot.command(name="pomodoro")
+async def pomodoro(ctx):
+    queue.add(PomodoroCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
+
+
 @tasks.loop(seconds=1)
 async def run_queue():   
     if not queue.is_empty():
