@@ -37,12 +37,8 @@ async def pomodoro(ctx):
 async def run_queue():
     if not queue.is_empty():
         if queue.is_ready():
-            print(queue.view())
             event = queue.pop()
-            print("MADE IT BEFORE MESSAGE:")
             message = event.run_event(queue)
-            print("AFTER MESSAGE:")
-            # user = await client.fetch_user(event.user_id)
             user = event.user_id
             if message is not None:
                 await user.send(message)
@@ -50,7 +46,7 @@ async def run_queue():
 
 run_queue.start()
 # Reads in the token
-with open('token.txt') as file:
+with open('../token.txt') as file:
     token = file.readline()
 
 bot.run(token)  # Launches the bot
