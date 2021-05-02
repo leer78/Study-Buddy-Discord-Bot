@@ -152,7 +152,7 @@ class EyesCommand(Event):
 		users = []
 		with open('eyes_active_users.txt') as active_users:
 			for name in active_users:
-				users.append(name)
+				users.append(name.strip('\n'))
 				if name == str(self.user_id):
 					turning_on = False
 			active_users.close()
