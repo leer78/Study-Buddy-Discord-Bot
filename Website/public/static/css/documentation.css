@@ -6,11 +6,11 @@ body{
     background: linear-gradient(163deg, rgba(2,0,36,1) 0%, rgb(47, 47, 105) 21%, rgb(6, 187, 223) 100%);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 200vh;
+    height: 300% + 50vh;
 }
 .body {
     display: flex;
-    min-height: 50vh;
+    min-height: 100vh;
     justify-content: center;
     align-items: center;
     padding: 0;
@@ -46,7 +46,6 @@ body{
     margin-bottom: 0;
     font-size: 15px;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
     transition: 0.3s ease;
     z-index: 1;
 }
@@ -54,7 +53,7 @@ body{
     position: relative;
 }
 
-#plus1, #plus2, #plus3{
+#plus1, #plus2, #plus3,#plus4, #plus5, #plus6,#plus7, #plus8, #plus9, #plus10, #plus11{
     display: block;
     position: absolute;
     right: 0;
@@ -69,7 +68,7 @@ body{
     border-radius: 50%;
 }
 
-#minus1, #minus2, #minus3{
+#minus1, #minus2, #minus3,#minus4, #minus5, #minus6,#minus7, #minus8, #minus9, #minus10, #minus11{
     display: none;
     position: absolute;
     right: 0;
@@ -112,6 +111,7 @@ body{
     font-size: 20px;
     color: white;
 }
+
 .context.show img{
     padding-top: 5px;
     top: -25px;
@@ -119,6 +119,106 @@ body{
     height: 30%;
     margin-left: 0%;
 }
+
+.context1.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+.context2.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 45%;
+    margin-left: 0%;
+}
+
+
+.context3.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 25%;
+    margin-left: 0%;
+}
+
+
+.context4.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 55%;
+    margin-left: 0%;
+}
+
+
+.context5.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 25%;
+    margin-left: 0%;
+}
+
+
+.context6.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+
+.context7.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+
+.context8.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+.context9.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 30%;
+    margin-left: 0%;
+}
+
+
+.context10.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+
+.context11.show img{
+    padding-top: 5px;
+    top: -25px;
+    width: 100%;
+    height: 40%;
+    margin-left: 0%;
+}
+
+
+
+
 
 
 
@@ -139,10 +239,49 @@ input{
     border-radius: 10px 10px 0 0;
 
 }
+#check4:checked ~ .mainContainer .bar4{
+    border-radius: 10px 10px 0 0;
+}
+#check5:checked ~ .mainContainer .bar5{
+    border-radius: 10px 10px 0 0;
+}
+#check6:checked ~ .mainContainer .bar6{
+    border-radius: 10px 10px 0 0;
+}
+#check7:checked ~ .mainContainer .bar7{
+    border-radius: 10px 10px 0 0;
+}
+#check8:checked ~ .mainContainer .bar8{
+    border-radius: 10px 10px 0 0;
+}
+#check9:checked ~ .mainContainer .bar9{
+    border-radius: 10px 10px 0 0;
+
+}
+#check10:checked ~ .mainContainer .bar10{
+    border-radius: 10px 10px 0 0;
+}
+#check11:checked ~ .mainContainer .bar11{
+    border-radius: 10px 10px 0 0;
+
+}
+
+
+
+
+
 
 #check1:checked ~ .mainContainer .bar #plus1,
 #check2:checked ~ .mainContainer .bar #plus2,
-#check3:checked ~ .mainContainer .bar #plus3{
+#check3:checked ~ .mainContainer .bar #plus3,
+#check4:checked ~ .mainContainer .bar #plus4,
+#check5:checked ~ .mainContainer .bar #plus5,
+#check6:checked ~ .mainContainer .bar #plus6,
+#check7:checked ~ .mainContainer .bar #plus7,
+#check8:checked ~ .mainContainer .bar #plus8,
+#check9:checked ~ .mainContainer .bar #plus9,
+#check10:checked ~ .mainContainer .bar #plus10,
+#check11:checked ~ .mainContainer .bar #plus11{
     display: none;
 }
 
@@ -153,5 +292,29 @@ input{
     display: block;
 }
 #check3:checked ~ .mainContainer .bar #minus3{
+    display: block;
+}
+#check4:checked ~ .mainContainer .bar #minus4{
+    display: block;
+}
+#check5:checked ~ .mainContainer .bar #minus5{
+    display: block;
+}
+#check6:checked ~ .mainContainer .bar #minus6{
+    display: block;
+}
+#check7:checked ~ .mainContainer .bar #minus7{
+    display: block;
+}
+#check8:checked ~ .mainContainer .bar #minus8{
+    display: block;
+}
+#check9:checked ~ .mainContainer .bar #minus9{
+    display: block;
+}
+#check10:checked ~ .mainContainer .bar #minus10{
+    display: block;
+}
+#check11:checked ~ .mainContainer .bar #minus11{
     display: block;
 }
