@@ -263,7 +263,7 @@ class PomodoroRepeated(Event):
 		# Add the wrapped event to the queue to be executed right away
 		# Create the next instance of RepeatedEvent and that to the queue
 
-		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), length, message, user_id) ,self.create_next_repeated_event()])
+		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), self.length, message, user_id) ,self.create_next_repeated_event()])
 	
 	def clone_event(self):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
