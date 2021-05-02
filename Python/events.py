@@ -84,7 +84,7 @@ class RepeatedEvent(Event):
 		new_event.start_time = new_event.start_time + self.time_interval
 
 
-		if self.unendeding:
+		if self.unending:
 			clone = self.clone_event()
 			clone.start_time = clone.start_time + self.time_interval
 			return clone
@@ -140,8 +140,83 @@ class EyeStrainReminder(Event):
 class EyesCommand(Event):
 	# This is created when a user runs the "+eyes" command
 	def run_event(self, event_queue):
-		# Check is they have this setting on or off
+		# Check if they have this setting on or off
 		new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
 		reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
 		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes= 1))
 		event_queue.add(repeated_event)
+
+
+class PomodoroCommand(Event):
+	# This is created when a user runs the "+Pomodoro" command
+	def run_event(self, event_queue):
+		start_time = datetime.datetime.now() + datetime.timedelta(minutes = 25)
+		reminder_event = PomodoroBreakReminder(start_time, datetime.timedelta(), self.user_id)
+		repeated_event = PomodoroRepeated(start_time, self.length, 4, reminder_event, self.user_id, datetime.timedelta(minutes= 25))
+
+		start_time_long = datetime.datetime.now() + datetime.timedelta(hours = 2)
+		reminder = PomodoroLongBreakReminder(start_time, datetime.timedelta(), self.user_id)
+		repeated_long_event = RepeatedEvent(start_time_long, self.length, 1, reminder, True, self.user_id, datetime.timedelta(hours= 2))
+
+		event_queue.add_list([MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Started the Pomodoro Studying method", self.user_id) ,repeated_event, repeated_long_event])
+
+class PomodoroLongBreakReminder(Event):
+	reminder_text: str = 'Its time to take a break (5 minutes)'
+
+	def run_event(self, event_queue: EventQueue):
+		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
+	
+	def clone_event(self):
+		return PomodoroLongBreakReminder(self.start_time, self.length, self.user_id)
+
+
+class PomodoroBreakReminder(Event):
+	reminder_text: str = 'Its time to take a break (30 minutes)'
+
+	def run_event(self, event_queue: EventQueue):
+		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
+	
+	def clone_event(self):
+		return PomodoroBreakReminder(self.start_time, self.length, self.user_id)
+
+
+class PomodoroRepeated(Event):
+	num_of_repeats: int
+
+	unending: bool
+
+	time_interval: int # The amount of time between the repetition of the event
+
+	event: Event # Event to be repeated
+
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, repeats: int, event: Event, user_id, time_interval):
+		super().__init__(start_time, length, user_id)
+		self.num_of_repeats = repeats
+		self.event = event
+		self.unending = unending
+		self.time_interval = time_interval
+
+	def create_next_repeated_event(self) -> Event:
+
+		new_event = self.event.clone_event()
+		new_event.start_time = new_event.start_time + self.time_interval
+
+		if self.num_of_repeats == 0:
+			return NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
+
+
+		clone = self.clone_event()
+		clone.start_time = clone.start_time + self.time_interval + datetime.timedelta(minutes = 5)
+		clone.num_of_repeats -= 1
+		return clone
+
+		
+
+	def run_event(self, event_queue: EventQueue):
+		# Add the wrapped event to the queue to be executed right away
+		# Create the next instance of RepeatedEvent and that to the queue
+
+		event_queue.add_list([self.event, MessageEvent(self.start_time + datetime.timedelta(minutes = 5), length, message, user_id) ,self.create_next_repeated_event()])
+	
+	def clone_event(self):
+		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
