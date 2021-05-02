@@ -5,6 +5,7 @@ import datetime
 from discord.ext import tasks, commands
 
 from events import *
+from to_do_events import *
 
 
 bot = commands.Bot(command_prefix='+')
@@ -20,14 +21,28 @@ async def on_ready():
 
 @bot.command(name="eyes")
 async def eyes(ctx):
-    queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
+    queue.add(EyesCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 
 
 @bot.command(name="pomodoro")
 async def pomodoro(ctx):
-    queue.add(PomodoroCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
+    queue.add(PomodoroCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 
 
+@bot.command(name="todoAdd")
+async def to_do_add(ctx, *args):
+    task = ''
+    for arg in args:
+        task += arg.strip('\n') + ' '
+    queue.add(CreateToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, task))
+
+@bot.command(name="todoDelete")
+async def to_do_delete(ctx, num):
+    queue.add(DeleteToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, num))
+
+@bot.command(name="todoView")
+async def to_do_view(ctx):
+    queue.add(ViewToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 # @bot.command(name="water")
 # async def water(ctx):
 #     queue.add(WaterCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
