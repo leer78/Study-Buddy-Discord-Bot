@@ -164,7 +164,7 @@ class EyesCommand(Event):
 			event_queue.add(repeated_event)
 
 			with open('../Database/eyes_active_users.txt', 'a') as file:
-				file.write(str(self.user_id))
+				file.write(str(self.user_id) + '\n')
 				file.close()
 
 			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Begun! Type +eyes To End It.", self.user_id))
@@ -178,7 +178,7 @@ class EyesCommand(Event):
 			users.remove(str(self.user_id))
 			with open('../Database/eyes_active_users.txt', 'w') as file:
 				for name in users:
-					file.write(name)
+					file.write(name + '\n')
 				file.close()
 
 			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Ended! Type +eyes To Begin Again.", self.user_id))
