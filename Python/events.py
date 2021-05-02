@@ -166,6 +166,8 @@ class EyesCommand(Event):
 			with open('../Database/eyes_active_users.txt', 'a') as file:
 				file.write(str(self.user_id))
 				file.close()
+
+			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Begun! Type +eyes To End It.", self.user_id))
 		else:
 			for event in event_queue.events:
 				if isinstance(event, RepeatedEvent):
@@ -177,6 +179,9 @@ class EyesCommand(Event):
 			with open('../Database/eyes_active_users.txt', 'w') as file:
 				for name in users:
 					file.write(name)
+				file.close()
+
+			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Ended! Type +eyes To Begin Again.", self.user_id))
 
 	def clone_event(self):
 		return EyesCommand(self.start_time, self.length, self.user_id)

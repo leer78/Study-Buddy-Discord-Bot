@@ -2,7 +2,6 @@ import asyncio
 import discord
 import time
 import datetime
-from staying_alive import staying_alive
 
 from events import *
 
@@ -58,8 +57,7 @@ async def run_queue():
 
 
 # Reads in the token
-with open('token.txt') as file:
+with open('../token.txt') as file:
     token = file.readline()
 
-staying_alive()
 client.run(token) # Launches the bot 
