@@ -8,8 +8,8 @@ body {
     overflow-y: hidden;
 }
 .msg-container{
-    width: 500px;
-    height: 280px;
+    width: 600px;
+    height: 350px;
     position: absolute;
     left: 15%;
     top: 40%;
@@ -37,7 +37,7 @@ body {
 
  .msg-col p{
      color: white;
-     font-size: 10px;
+     font-size: 15px;
      line-height: 25px;
  }
 
@@ -77,8 +77,8 @@ body {
     width: 80%;
     height: 40%;
     margin: 10px auto;
-    background: rgb(2,0,36);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(2,0,36,1) 0%, rgba(93,0,199,1) 73%, rgba(0,212,255,1) 100%);;
+    background: rgb(101, 7, 189);
+    background:  linear-gradient(to bottom right, rgb(101,7,189), rgb(194, 5, 194));
     border-radius: 15px;
     top: 38vh;
 
