@@ -27,7 +27,7 @@ class CheckStudyingCommand(Event):
             studying = True
 
         if studying:
-            event_queue.add(MessageEvent(self.start_time, self.length, "Yes, that user is currently study! You probably shouldn't bother them!", self.user_id))
+            event_queue.add(MessageEvent(self.start_time, self.length, "Yes, that user is currently studying! You probably shouldn't bother them!", self.user_id))
         else:
             event_queue.add(MessageEvent(self.start_time, self.length, "No, that user isn't studying! Feel free to give them a call!", self.user_id))
 

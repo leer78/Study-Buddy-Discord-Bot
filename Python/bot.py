@@ -3,11 +3,13 @@ import discord
 import time
 import datetime
 from discord.ext import tasks, commands
-from pomodoro_events import *
 
+from pomodoro_events import *
 from events import *
 from to_do_events import *
 from gaming_events import *
+from water_events import *
+from music_events import *
 
 
 bot = commands.Bot(command_prefix='+')
@@ -67,6 +69,11 @@ async def bottle(ctx):
 @bot.command(name="studying?")
 async def studying(ctx, user: discord.User):
     queue.add(CheckStudyingCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, user))
+
+
+@bot.command(name='music')
+async def music(ctx):
+    queue.add(MusicReqCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 
 
 @tasks.loop(seconds=1)
