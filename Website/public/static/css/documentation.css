@@ -87,16 +87,16 @@ body{
 .context{
     width: 80%;
     background: grey;
-    color: white;
+    color: transparent;
     margin: auto;
-    font-size: 20px;
+    font-size: 0px;
     text-align: justify;
     padding: 0 20px 20px 20px;
     border-radius: 0 0 15px 15px;
     position: relative;
     transition: 0.3s ease;
     top: -40px;
-    height: 0px;
+    height: 0px
 }
 
 
@@ -108,7 +108,9 @@ body{
 .context.show{
     padding-top: 40px;
     top: -25px;
-    height: 350px;
+    height: 350px ;
+    font-size: 20px;
+    color: white;
 }
 .context.show img{
     padding-top: 5px;
