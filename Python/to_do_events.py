@@ -54,7 +54,6 @@ class DeleteToDoCommand(Event):
             for row in reader:
                 items.append(row)
 
-
         for item in items:
             if item[0] == self.to_do_number:
                 items.remove(item)
@@ -62,8 +61,10 @@ class DeleteToDoCommand(Event):
 
         with open('database/to_do_lists/' + str(self.user_id) + '.csv', 'w', newline='') as to_do_list:
             writer = csv.writer(to_do_list)
-            for item in items:
-                writer.writerow(item)
+            for i in range(0, len(items)):
+                writer.writerow([str(i + 1), items[i][1]])
+
+            to_do_list.close()
 
     def clone_event(self):
         return DeleteToDoCommand(self.start_time, self.length, self.user_id, self.to_do_number)

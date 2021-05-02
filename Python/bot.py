@@ -6,6 +6,7 @@ from discord.ext import tasks, commands
 
 from events import *
 from to_do_events import *
+from gaming_events import *
 
 
 bot = commands.Bot(command_prefix='+')
@@ -40,12 +41,25 @@ async def to_do_add(ctx, *args):
 async def to_do_delete(ctx, num):
     queue.add(DeleteToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author, num))
 
+
 @bot.command(name="todoView")
 async def to_do_view(ctx):
     queue.add(ViewToDoCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
-# @bot.command(name="water")
-# async def water(ctx):
-#     queue.add(WaterCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
+
+
+@bot.command(name="gaming")
+async def gaming(ctx):
+    queue.add(GamingCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
+
+
+@bot.command(name="water")
+async def water(ctx):
+    queue.add(WaterCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
+
+
+@bot.command(name="bottle")
+async def bottle(ctx):
+    queue.add(BottleCommand(datetime.datetime.now(), datetime.timedelta(), ctx.author))
 
 
 @tasks.loop(seconds=1)
