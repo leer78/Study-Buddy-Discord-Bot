@@ -2,42 +2,31 @@ import asyncio
 import discord
 import time
 import datetime
+from discord.ext import commands
 
 from events import *
 
 
-client = discord.Client()  # Creates the bot object
+
+
+bot = commands.Bot(command_prefix = '+')
+
 queue = EventQueue()
 
 
 # Bot functions
-@client.event
+@bot.event
 async def on_ready():
-    print(client.user, " Has Logged In")
+    print(bot.user, " Has Logged In")
 
 
-@client.event
-async def on_message(message: discord.message.Message):
-    msg = message.content
-
-    # Adds eye strain command to the queue of events
-    if (msg.startswith("+eyes")):
-        queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), message.author))
-
-    # Adds pomodor studying technique session to the queue of events (refer to website for )
-    #if(msg.startswith("+pomodoro")):
-     #   queue.add(PomodoroCommand(datetime.datetime.now(),datetime.timedelta(), message.author))
-
-    #if(msg.startswith("+gaming")):
-     #   queue.add(GamingCommand(datetime.datetime.now(),datetime.timedelta(), message.author))    
-
-    await tic_toc()
 
 
-async def tic_toc():    
-    if queue.is_ready():
-        await run_queue()
-    asyncio.sleep(30)
+@bot.command(name = "eyes")
+async def eyes(ctx):
+    queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
+
+
 
 async def run_queue():
     #while not queue.is_empty():
@@ -51,8 +40,9 @@ async def run_queue():
         await user.send(message)
 
 
+
 # Reads in the token
 with open('token.txt') as file:
     token = file.readline()
 
-client.run(token) # Launches the bot 
+bot.run(token) # Launches the bot 
