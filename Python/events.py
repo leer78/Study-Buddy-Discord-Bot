@@ -158,9 +158,9 @@ class EyesCommand(Event):
 			active_users.close()
 
 		if turning_on:
-			new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
+			new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=20)
 			reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
-			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes=1))
+			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes=20))
 			event_queue.add(repeated_event)
 
 			with open('eyes_active_users.txt', 'a') as file:

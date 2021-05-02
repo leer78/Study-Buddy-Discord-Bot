@@ -36,9 +36,9 @@ class GamingCommand(Event):
                 writer = csv.writer(users)
                 writer.writerow([str(self.user_id)])
 
-            new_start_time = self.start_time + datetime.timedelta(minutes=1)
+            new_start_time = self.start_time + datetime.timedelta(minutes=60)
             repeated_message_event = GamingReminderEvent(new_start_time, datetime.timedelta(), self.user_id)
-            repeated_event = RepeatedEvent(new_start_time, datetime.timedelta(), 1, repeated_message_event, True, self.user_id, datetime.timedelta(minutes=1))
+            repeated_event = RepeatedEvent(new_start_time, datetime.timedelta(), 1, repeated_message_event, True, self.user_id, datetime.timedelta(minutes=60))
             event_queue.add(repeated_event)
 
         else:

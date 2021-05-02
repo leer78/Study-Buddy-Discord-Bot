@@ -76,7 +76,7 @@ class ViewToDoCommand(Event):
         super().__init__(start_time, length, user_id)
 
     def run_event(self, event_queue):
-        output_message = ''
+        output_message = 'This is your to-do list: ' + '\n'
 
         with open('database/to_do_lists/' + str(self.user_id) + '.csv', 'r') as to_do_list:
             reader = csv.reader(to_do_list)
