@@ -201,7 +201,7 @@ class PomodoroCommand(Event):
 		event_queue.add_list([MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Started the Pomodoro Studying method", self.user_id) ,repeated_event, repeated_long_event])
 
 class PomodoroLongBreakReminder(Event):
-	reminder_text: str = 'Its time to take a break (5 minutes)'
+	reminder_text: str = 'Its time to take a break (30 minutes)'
 
 	def run_event(self, event_queue: EventQueue):
 		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
@@ -211,7 +211,7 @@ class PomodoroLongBreakReminder(Event):
 
 
 class PomodoroBreakReminder(Event):
-	reminder_text: str = 'Its time to take a break (30 minutes)'
+	reminder_text: str = 'Its time to take a break (5 minutes)'
 
 	def run_event(self, event_queue: EventQueue):
 		event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), self.reminder_text, self.user_id))
