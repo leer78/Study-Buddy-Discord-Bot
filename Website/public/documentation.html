@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <link rel = "stylesheet" href = "static/css/navbar.css">
+        <link rel = "stylesheet" href = "static/css/documentation.css">
+        <div class="menu" id="sticky">
+            <div class = "discordlogo">
+                <img src = "static/images/book_mark_logo.png">
+            </div>
+            <u1 class="menu-u1">
+                <a href="index.html" class="a-menu">
+                    <li>Home </li>
+                </a>
+                <a href="documentation.html" class="a-menu"  id = "current-page">
+                    <li>Documentation</li>
+                </a>
+                <a href="aboutme.html" class="a-menu">
+                    <li>About me</li>
+                </a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=837831896146771998&permissions=0&scope=bot" class="a-menu">
+                    <li>Add to Discord</li>
+                </a>
+            </u1>
+        </div>
+</head>
+
+
+    
+<body>
+
+        <div class = "body">
+            <input type = "checkbox" id = "check1">
+            <input type = "checkbox" id = "check2">
+            <input type = "checkbox" id = "check3">
+            <div class = "mainContainer">
+                <label for = "check1" class = "bar bar1">
+                    <div class = "symbol"> 
+                        <span id = "minus1">-</span>
+                        <span id = "plus1">+</span>
+                    </div>
+                    command 1
+                </label>
+                <div class = "context context1">
+                    someone touch my spagghet
+                </div>
+
+                <label for = "check2" class = "bar bar2">
+                    <div class = "symbol"> 
+                        <span id = "minus2">-</span>
+                        <span id = "plus2">+</span>
+                    </div>
+                    command 2
+                </label>
+                <div class = "context context2">
+                    <img src = "../static/images/headtilt.png">
+                    someone touch my spagghet
+                </div>
+
+                <label for = "check3" class = "bar bar3">
+                    <div class = "symbol"> 
+                        <span id = "minus3">-</span>
+                        <span id = "plus3">+</span>
+                    </div>
+                    command 3
+                </label>
+                <div class = "context context3">
+                    someone touch my spagghet
+                </div>
+
+                
+            </div>
+
+    </div>
+
+
+<script>
+    var bar1 = document.querySelector(".bar1");
+    var bar2 = document.querySelector(".bar2");
+    var bar3 = document.querySelector(".bar3");
+
+    bar1.addEventListener("click", function(){
+        var context1 = document.querySelector(".context1");
+        context1.classList.toggle("show")
+    });
+    bar2.addEventListener("click", function(){
+        var context1 = document.querySelector(".context2");
+        context1.classList.toggle("show")
+    });
+    bar3.addEventListener("click", function(){
+        var context1 = document.querySelector(".context3");
+        context1.classList.toggle("show")
+    });
+</script>
+</body>
+

@@ -1,0 +1,66 @@
+
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
+body {
+    margin: 0;
+	font-family: 'DIN Alternate Bold', sans-serif;
+    overflow-y: hidden;
+}
+
+
+.title{
+   background:rgba(60, 2, 99, 0.5);
+   text-align: center;
+   color:black;
+   padding:30px;
+   font-size: 40px;
+   letter-spacing: 10px;
+
+
+}
+
+
+.container{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    /*background-image: url(../images/gradientbackground.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    */
+    background: linear-gradient(60deg,purple, rgb(255,0,127,0.7), blue );
+    background-size: 600% 100%;
+    animation: gradient 15s linear infinite;
+
+}
+
+@keyframes gradient{
+    0% { background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0% }
+}
+
+.titlecard{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 25%;
+    top: 30%;
+
+}
+
+.titlecard .studybuddyIntro img{
+
+    width: 15vw;
+    height: auto;
+    margin: 0px;
+}
+
+.titlecard .logoBig img{
+
+    width: 13vw;
+    height: auto;
+    margin: 0px 0px 0px 50%;
+
+}
