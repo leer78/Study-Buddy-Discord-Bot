@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
+body {
+    margin: 0;
+	font-family: 'DIN Alternate Bold', sans-serif;
+}
+
+
+.parallax{
+    background-color: rgb(119, 104, 252); 
+}
+
+
+.sticky{
+    position:fixed;
+    top:0;
+    width: 100%;
+
+}
+
+
+.menu{
+    background-color: rgba(12, 12, 14, 0.8);
+    text-align: center;
+    z-index: 1;
+    background-image: url(../images/studybuddybotLogo.png);
+    background-repeat: no-repeat;
+    position: relative;
+    background-position-x: 97%;
+}
+
+.discordlogo{
+    width: 155px;
+
+}
+.discordlogo img{
+    width: 50px;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    top: 10%;
+    left: 5%;
+}
+.menu-u1{
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+}
+
+.menu-u1 li{
+    font-size: 1em;
+    list-style:none;
+    display:inline-block;
+    padding:25px 25px 25px 25px;
+    z-index: 1;
+
+}
+
+.menu-u1 li:hover{
+    transform: 2s;
+    /*border: 1px solid black;*/
+}
+
+.a-menu {
+    color:rgb(247, 247, 247);
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    position: relative;
+  }
+
+#current-page{
+    background-color:rgb(106, 17, 207);
+    
+
+}
+
+
+
+.a-menu:after {    
+
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: rgb(255, 255, 255);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0px;
+    bottom: 20px;
+  }
+  a:hover:after { 
+    width: 80%; 
+    left: 10%; 
+  }
+
+
+
