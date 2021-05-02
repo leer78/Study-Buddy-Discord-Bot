@@ -44,7 +44,7 @@ async def run_queue():
 
 run_queue.start()
 # Reads in the token
-with open('token.txt') as file:
+with open('../token.txt') as file:
     token = file.readline()
 
 bot.run(token) # Launches the bot 
