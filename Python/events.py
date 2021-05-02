@@ -181,6 +181,7 @@ class EyesCommand(Event):
 					file.write(name + '\n')
 				file.close()
 
+
 			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Ended! Type +eyes To Begin Again.", self.user_id))
 
 	def clone_event(self):
