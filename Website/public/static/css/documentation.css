@@ -107,13 +107,14 @@ body{
 .context.show{
     padding-top: 40px;
     top: -25px;
-    height: 270px;
+    height: 305px;
 }
 .context.show img{
-    padding-top: 10px;
+    padding-top: 5px;
     top: -25px;
     width: 90%;
-    height: 100px;
+    height: 50%;
+    margin-left: 5%;
 }
 
 
