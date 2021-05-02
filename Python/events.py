@@ -4,13 +4,13 @@ import discord
 
 
 class Event:
-	user_id: int
+	user_id: discord.User
 
 	start_time: datetime.datetime
 	length: datetime.timedelta
 	end_time: datetime.datetime
 
-	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: int):
+	def __init__(self, start_time: datetime.datetime, length: datetime.timedelta, user_id: discord.User):
 		self.user_id = user_id
 
 		self.start_time = start_time
@@ -27,6 +27,7 @@ class Event:
 
 class EventQueue:
 	# The events sorted decreasing order of the timedelta from the current time
+	events: list[Event]
 
 	def __init__(self):
 		self.events = []
@@ -59,9 +60,15 @@ class EventQueue:
 		
 		return False
 
+	def remove(self, event):
+		for e in self.events:
+			if e == event:
+				self.events.remove(e)
+
 	def view(self):
 		for x in self.events:
 			print(x.start_time)
+
 
 class RepeatedEvent(Event):
 	num_of_repeats: int
@@ -82,7 +89,6 @@ class RepeatedEvent(Event):
 	def create_next_repeated_event(self) -> Event:
 		new_event = self.event.clone_event()
 		new_event.start_time = new_event.start_time + self.time_interval
-
 
 		if self.unending:
 			clone = self.clone_event()
@@ -107,11 +113,11 @@ class RepeatedEvent(Event):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
 
 
-
 class NullEvent(Event):
 
 	def run_event(self, event_queue):
 		return None
+
 
 class MessageEvent(Event):
 
@@ -127,6 +133,7 @@ class MessageEvent(Event):
 	def clone_event(self):
 		return MessageEvent(self.start_time, self.length, self.message_content, self.user_id)
 
+
 class EyeStrainReminder(Event):
 	reminder_text: str = 'You need to look away now'
 
@@ -138,13 +145,53 @@ class EyeStrainReminder(Event):
 
 
 class EyesCommand(Event):
-	# This is created when a user runs the "+eyes" command
-	def run_event(self, event_queue):
-		# Check if they have this setting on or off
-		new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
-		reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
-		repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, False, self.user_id, datetime.timedelta(minutes= 1))
-		event_queue.add(repeated_event)
+	def run_event(self, event_queue: EventQueue):
+		turning_on = True
+
+		users = []
+		with open('eyes_active_users.txt') as active_users:
+			for name in active_users:
+				users.append(name.strip('\n'))
+				if name.strip('\n') == str(self.user_id):
+					turning_on = False
+			active_users.close()
+
+		if turning_on:
+			new_start_time = datetime.datetime.now() + datetime.timedelta(minutes=1)
+			reminder_event = EyeStrainReminder(new_start_time, datetime.timedelta(), self.user_id)
+			repeated_event = RepeatedEvent(new_start_time, self.length, 1, reminder_event, True, self.user_id, datetime.timedelta(minutes=1))
+			event_queue.add(repeated_event)
+
+			with open('eyes_active_users.txt', 'a') as file:
+				file.write(str(self.user_id) + '\n')
+				file.close()
+
+			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Begun! Type +eyes To End It.", self.user_id))
+		else:
+			for i in range(0, len(event_queue.events)):
+				if isinstance(event_queue.events[i], RepeatedEvent):
+					if isinstance(event_queue.events[i].event, EyeStrainReminder):
+						if event_queue.events[i].user_id == self.user_id:
+							event_queue.events[i] = NullEvent(datetime.datetime.now(), datetime.timedelta(), self.user_id)
+							break
+
+			# for event in event_queue.events:
+			# 	if isinstance(event, RepeatedEvent):
+			# 		if isinstance(event.event, EyeStrainReminder):
+			# 			if event.user_id == self.user_id:
+			# 				event_queue.remove(event)
+			# 				break
+			users.remove(str(self.user_id))
+			with open('eyes_active_users.txt', 'w') as file:
+				for name in users:
+					file.write(name + '\n')
+				file.close()
+
+			event_queue.add(MessageEvent(datetime.datetime.now(), datetime.timedelta(), "Eye Strain Reduction Session Has Ended! Type +eyes To Begin Again.", self.user_id))
+
+	def clone_event(self):
+		return EyesCommand(self.start_time, self.length, self.user_id)
+
 
 
 class PomodoroCommand(Event):
@@ -220,3 +267,4 @@ class PomodoroRepeated(Event):
 	
 	def clone_event(self):
 		return RepeatedEvent(self.start_time, self.length, self.num_of_repeats, self.event, self.unending, self.user_id, self.time_interval)
+	

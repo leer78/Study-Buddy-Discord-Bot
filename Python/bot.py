@@ -2,52 +2,49 @@ import asyncio
 import discord
 import time
 import datetime
-from discord.ext import commands
+from discord.ext import tasks, commands
 
 from events import *
 
 
-client = discord.Client() # Creates the bot object
+
+
+bot = commands.Bot(command_prefix = '+')
+
 queue = EventQueue()
 
 
 # Bot functions
-@client.event
-async def on_ready():       
-    print(client.user , " Has Logged In")
+@bot.event
+async def on_ready():
+    print(bot.user, " Is Alive :)")
 
 
-@client.event
-async def on_message(message: discord.message.Message):
-    msg = message.content
+@bot.command(name = "eyes")
+async def eyes(ctx):
+    queue.add(EyesCommand(datetime.datetime.now(),datetime.timedelta(), ctx.author))
 
-    # Adds eye strain command to the queue of events
-    if (msg.startswith("+eyes")):
-        queue.add(EyesCommand(datetime.datetime.now(), datetime.timedelta(), message.author))
-        
-    await run_queue()
 
-    
-async def run_queue():
-   
-    while not queue.is_empty():  
-        #print("-") 
-        if queue.is_ready():   
-            queue.view()
-            print("IM READY") 
+@tasks.loop(seconds=1)
+async def run_queue():   
+    if not queue.is_empty():
+        if queue.is_ready():
+            print(queue.view())
             event = queue.pop()
+            print("MADE IT BEFORE MESSAGE:" )
             message = event.run_event(queue)
-        #user = await client.fetch_user(event.user_id)
+            print("AFTER MESSAGE:" )
+            # user = await client.fetch_user(event.user_id)
             user = event.user_id
             if message is not None:
                 await user.send(message)
-            await user.send("hello")
-    print("IM OUT")
 
 
 
-# Reads in the token 
-with open('token.txt') as file:
+
+run_queue.start()
+# Reads in the token
+with open('../token.txt') as file:
     token = file.readline()
 
-client.run(token) # Launches the bot 
+bot.run(token) # Launches the bot 
